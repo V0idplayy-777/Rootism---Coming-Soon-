@@ -1,0 +1,389 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>rootism — a coding agent, trained from scratch</title>
+    <meta
+      name="description"
+      content="rootism is a coding agent being trained from scratch by one person. not an api wrapper. updates get posted as things happen."
+    />
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title="rootism updates"
+      href="feed.xml"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+      html { scroll-behavior: smooth; background: #f9f8f3; }
+      body {
+        background: #f9f8f3;
+        color: #1b1b15;
+        font-family: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+        -webkit-font-smoothing: antialiased;
+        line-height: 1.5;
+      }
+      ::selection { background: #cde8d4; }
+      a { color: inherit; text-decoration: none; }
+      .u {
+        text-decoration: underline;
+        text-underline-offset: 3px;
+        text-decoration-color: #d8d5c7;
+      }
+      .u:hover {
+        color: #0e7a3a;
+        text-decoration-color: #0e7a3a;
+      }
+      .page { min-height: 100vh; display: flex; flex-direction: column; }
+      .topbar { height: 3px; background: #0e7a3a; }
+      header {
+        border-bottom: 1px solid #e3e1d4;
+      }
+      .header-inner {
+        max-width: 36rem;
+        margin: 0 auto;
+        padding: 0 1.5rem;
+        height: 3.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .logo-link {
+        display: flex;
+        align-items: center;
+        gap: 0.625rem;
+      }
+      .logo-link span { font-weight: 600; font-size: 0.875rem; }
+      nav { display: flex; align-items: center; gap: 1.25rem; font-size: 0.875rem; }
+      nav .hide-sm { display: none; }
+      @media (min-width: 640px) {
+        nav .hide-sm { display: inline; }
+      }
+      main {
+        flex: 1;
+        max-width: 36rem;
+        width: 100%;
+        margin: 0 auto;
+        padding: 0 1.5rem;
+      }
+      .hero { padding: 4rem 0 3rem; }
+      .status {
+        display: flex;
+        align-items: center;
+        gap: 0.625rem;
+        font-size: 0.875rem;
+        color: #6d6d5f;
+        margin-bottom: 2rem;
+      }
+      .status-dot {
+        display: inline-block;
+        width: 0.5rem;
+        height: 0.5rem;
+        background: #0e7a3a;
+      }
+      h1 {
+        font-size: 2.25rem;
+        font-weight: 600;
+        letter-spacing: -0.025em;
+        line-height: 1.1;
+      }
+      @media (min-width: 640px) {
+        h1 { font-size: 3rem; }
+      }
+      .caret {
+        display: inline-block;
+        width: 0.55em;
+        height: 0.95em;
+        margin-left: 0.1em;
+        background: #0e7a3a;
+        vertical-align: -0.12em;
+        animation: blink 1.15s steps(2, start) infinite;
+      }
+      @keyframes blink {
+        0%, 45% { opacity: 1; }
+        46%, 100% { opacity: 0; }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .caret { animation: none; }
+      }
+      .lead { margin-top: 1.75rem; line-height: 1.625; }
+      .sub { margin-top: 1rem; font-size: 0.875rem; color: #6d6d5f; }
+      section {
+        border-top: 1px solid #e3e1d4;
+        padding: 3rem 0;
+        scroll-margin-top: 4rem;
+      }
+      .section-label {
+        font-size: 0.875rem;
+        color: #6d6d5f;
+        margin-bottom: 1.25rem;
+      }
+      .section-label.tight { margin-bottom: 0.5rem; }
+      aside {
+        margin-top: 1.5rem;
+        border-left: 2px solid #0e7a3a;
+        padding-left: 1rem;
+      }
+      aside p {
+        font-size: 0.875rem;
+        line-height: 1.625;
+        color: #6d6d5f;
+      }
+      aside strong { color: #1b1b15; font-weight: 500; }
+      .not-list {
+        margin-top: 2rem;
+        font-size: 0.875rem;
+        color: #6d6d5f;
+        margin-bottom: 0.75rem;
+      }
+      ul.xlist { list-style: none; }
+      ul.xlist li {
+        display: flex;
+        gap: 0.75rem;
+        margin-bottom: 0.5rem;
+      }
+      ul.xlist span { color: #6d6d5f; }
+      .divider {
+        text-align: center;
+        font-size: 0.875rem;
+        color: #b9b6a6;
+        padding: 0.5rem 0;
+      }
+      .body { line-height: 1.625; }
+      .body + .body { margin-top: 1rem; }
+      .updates-intro {
+        font-size: 0.875rem;
+        color: #6d6d5f;
+        margin-bottom: 1rem;
+      }
+      .entry { padding: 1.25rem 0; }
+      .entry-date {
+        font-size: 0.75rem;
+        color: #b9b6a6;
+      }
+      .entry-title {
+        margin-top: 0.25rem;
+        font-weight: 500;
+      }
+      .entry-body {
+        margin-top: 0.25rem;
+        font-size: 0.875rem;
+        color: #6d6d5f;
+        line-height: 1.625;
+      }
+      details { border-top: 1px solid #e3e1d4; }
+      details:first-child { border-top: none; }
+      details summary {
+        list-style: none;
+        cursor: pointer;
+        display: flex;
+        align-items: baseline;
+        gap: 0.75rem;
+        padding: 1rem 0;
+        font-weight: 500;
+      }
+      details summary:hover { color: #0e7a3a; }
+      summary::-webkit-details-marker { display: none; }
+      .plus {
+        display: inline-block;
+        color: #6d6d5f;
+        transition: transform 0.15s;
+      }
+      details[open] .plus { transform: rotate(45deg); }
+      details p {
+        padding: 0 0 1.25rem 1.5rem;
+        font-size: 0.875rem;
+        line-height: 1.625;
+        color: #6d6d5f;
+      }
+      .signoff { border-top: 1px solid #e3e1d4; padding: 3rem 0; }
+      .signoff .body { line-height: 1.625; }
+      .signoff .meta {
+        margin-top: 2rem;
+        font-size: 0.875rem;
+        color: #6d6d5f;
+      }
+      .signoff .meta + .meta { margin-top: 0.5rem; }
+      footer {
+        border-top: 1px solid #e3e1d4;
+      }
+      .footer-inner {
+        max-width: 36rem;
+        margin: 0 auto;
+        padding: 1.5rem;
+        font-size: 0.75rem;
+        color: #6d6d5f;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+      @media (min-width: 640px) {
+        .footer-inner {
+          flex-direction: row;
+          justify-content: space-between;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <div class="topbar"></div>
+
+      <header>
+        <div class="header-inner">
+          <a href="#top" class="logo-link">
+            <svg width="19" height="19" viewBox="0 0 32 32" style="border-radius:4px">
+              <rect width="32" height="32" rx="5" fill="#0e7a3a" />
+              <path d="M7 9 L11 13 L14 9" fill="none" stroke="#f9f8f3" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M11 13 L25 13 L20.5 24 L14 24" fill="none" stroke="#f9f8f3" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+            <span>rootism</span>
+          </a>
+          <nav>
+            <a href="#what" class="u hide-sm">what</a>
+            <a href="#updates" class="u">updates</a>
+            <a href="#faq" class="u hide-sm">faq</a>
+          </nav>
+        </div>
+      </header>
+
+      <main id="top">
+        <section class="hero" style="border-top:none">
+          <p class="status">
+            <span class="status-dot"></span>
+            status: financially fucked
+          </p>
+
+          <h1>
+            a coding agent,<br />
+            trained from scratch.<span class="caret"></span>
+          </h1>
+
+          <p class="lead">
+            rootism is an ai coding agent. it is not an api wrapper. i'm
+            training the whole thing myself from zero, which is objectively
+            a terrible financial decision and probably above my pay grade,
+            but fuck it, here we are.
+          </p>
+
+          <p class="sub">
+            i know how hard this is going to be. i also know there are already
+            heaps of coding agents and i'm not a creative guy, so the
+            differentiation strategy is currently just "hope it doesn't
+            suck".
+          </p>
+        </section>
+
+        <section id="what">
+          <h2 class="section-label">[01] what this is</h2>
+          <p class="body">
+            a coding agent where the model itself is actually mine. everyone
+            else rents an api, hot-glues twenty python scripts together, and
+            calls it an ecosystem. i want to train my own weights from nothing
+            so that when it shits the bed at 3am, i have nobody to blame but
+            myself.
+          </p>
+
+          <aside>
+            <p>
+              <strong>why rootism?</strong> i'm thinking
+              of calling it that because root access sounds cool and i spent
+              about twelve seconds thinking about it before getting back to
+              terminal. if it's awful i'll rebrand right before bankruptcy.
+            </p>
+          </aside>
+
+          <p class="not-list">what it's not:</p>
+          <ul class="xlist">
+            <li><span>×</span> another openrouter wrapper charging $20/month</li>
+            <li><span>×</span> a fine-tune with a marketing budget</li>
+            <li><span>×</span> backed by venture capital or parental approval</li>
+          </ul>
+        </section>
+
+        <p class="divider">- - - - - - - - - 8&lt; - - - - - - - - -</p>
+
+        <section style="border-top:none; padding-top:3rem">
+          <h2 class="section-label">[02] the honest part</h2>
+          <p class="body">
+            the market is saturated. i have zero marketing skills, zero
+            advertising knowledge, and the creative instincts of a goddamn
+            brick. so figuring out how to make this unique is an item on my
+            to-do list somewhere between "optimise loss curve" and "rethink
+            my life choices".
+          </p>
+          <p class="body">
+            if this all goes to shit, at least it'll happen right here where
+            everyone can point and laugh.
+          </p>
+        </section>
+
+        <section id="updates">
+          <h2 class="section-label tight">[03] update log</h2>
+          <p class="updates-intro">
+            tracking progress here as things happen. rss feed
+            <a href="feed.xml" class="u">over here</a>.
+          </p>
+
+          <div class="entry">
+            <p class="entry-date">nov 7</p>
+            <p class="entry-title">training code is basically there</p>
+            <p class="entry-body">
+              almost done with the training pipeline. just tweaking, fixing dumb shit, doing the finishing touches, and optimising the hell out of it before i press the button and watch my bank balance disintegrate in real time.
+            </p>
+          </div>
+        </section>
+
+        <section id="faq">
+          <h2 class="section-label tight">[04] faq</h2>
+          <div>
+            <details>
+              <summary><span class="plus">+</span> when does it come out?</summary>
+              <p>when it works. or whenever my credit card gets declined by the cluster provider, whichever comes first.</p>
+            </details>
+            <details>
+              <summary><span class="plus">+</span> isn't this space crowded already?</summary>
+              <p>completely. at this point half of them are the same five models wearing different trenchcoats. entering an oversaturated market with no marketing skills and no unique selling point is just how i relax.</p>
+            </details>
+            <details>
+              <summary><span class="plus">+</span> will it cost anything?</summary>
+              <p>there'll be a free way to run it. i'd feel weird charging money for something made by someone this visibly unqualified.</p>
+            </details>
+            <details>
+              <summary><span class="plus">+</span> who are you?</summary>
+              <p>one guy in a room with blinds shut, training models and avoiding real-world responsibilities. my creative peak was naming this thing rootism, and even that was a total accident because i fucking suck at naming things anyway.</p>
+            </details>
+            <details>
+              <summary><span class="plus">+</span> how do i track this?</summary>
+              <p>check the log above once in a while. or the rss feed if you still use one like a normal recluse.</p>
+            </details>
+          </div>
+        </section>
+
+        <section class="signoff">
+          <p class="body">
+            that's all i've got right now. back to fighting cuda and
+            questioning my life choices.
+          </p>
+          <p class="meta">— the person building rootism</p>
+          <p class="meta">p.s. thx for reading this far. genuinely.</p>
+        </section>
+      </main>
+
+      <footer>
+        <div class="footer-inner">
+          <p>© 2026 rootism. probably.</p>
+          <p>one person, zero safety net.</p>
+        </div>
+      </footer>
+    </div>
+  </body>
+</html>
