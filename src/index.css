@@ -1,0 +1,64 @@
+@import "tailwindcss";
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: #f9f8f3;
+  color: #1b1b15;
+  font-family: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: #cde8d4;
+}
+
+details summary {
+  list-style: none;
+  cursor: pointer;
+}
+
+summary::-webkit-details-marker {
+  display: none;
+}
+
+.plus {
+  display: inline-block;
+  transition: transform 0.15s;
+}
+
+details[open] .plus {
+  transform: rotate(45deg);
+}
+
+.caret {
+  display: inline-block;
+  width: 0.55em;
+  height: 0.95em;
+  margin-left: 0.1em;
+  background: #0e7a3a;
+  vertical-align: -0.12em;
+  animation: blink 1.15s steps(2, start) infinite;
+}
+
+@keyframes blink {
+  0%, 45% { opacity: 1; }
+  46%, 100% { opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .caret { animation: none; }
+}
+
+.u {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: #d8d5c7;
+}
+
+.u:hover {
+  color: #0e7a3a;
+  text-decoration-color: #0e7a3a;
+}
