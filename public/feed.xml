@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>rootism updates</title>
+    <link>https://rootism.dev/</link>
+    <atom:link href="https://rootism.dev/feed.xml" rel="self" type="application/rss+xml" />
+    <description>progress notes on rootism, a coding agent being trained from scratch by one person.</description>
+    <language>en</language>
+    <item>
+      <title>training code is basically there</title>
+      <link>https://rootism.dev/#updates</link>
+      <guid>https://rootism.dev/#nov-7</guid>
+      <pubDate>Fri, 07 Nov 2025 09:00:00 GMT</pubDate>
+      <description>almost done with the training pipeline. just tweaking, fixing dumb shit, doing the finishing touches, and optimising the hell out of it before i press the button and watch my bank balance disintegrate in real time.</description>
+    </item>
+  </channel>
+</rss>
